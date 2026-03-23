@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Élan Studio — Premium Product Showcase</title>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://plus.unsplash.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#0f0f10;
+      --muted:#6f6f75;
+      --line:#ececf0;
+      --accent:#7c3aed;
+      --accent-2:#a78bfa;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+      --radius:16px;
+      --radius-sm:12px;
+      --container:1200px;
+      --ease:cubic-bezier(.2,.8,.2,1);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;overflow-x:hidden}
+    body{
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    img{display:block;max-width:100%}
+    a{text-decoration:none;color:inherit}
+    .container{width:min(var(--container),92%);margin-inline:auto}
+
+    /* Header */
+    header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.85);
+      backdrop-filter:saturate(150%) blur(10px);
+      border-bottom:1px solid rgba(0,0,0,.06);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      height:74px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:700;letter-spacing:.5px;
+    }
+    .brand-mark{
+      width:30px;height:30px;border-radius:9px;
+      background:linear-gradient(135deg,var(--text),#2e2e31 55%,var(--accent));
+      box-shadow:0 6px 16px rgba(124,58,237,.35);
+    }
+    .nav-links{
+      display:flex;gap:26px;color:#222;
+      font-size:.95rem;
+    }
+    .nav-links a{position:relative}
+    .nav-links a::after{
+      content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:var(--accent);
+      transition:width .3s var(--ease);
+    }
+    .nav-links a:hover::after{width:100%}
+    .cart-btn{
+      position:relative;
+      border:1px solid var(--line);
+      background:#fff;
+      color:#111;
+      border-radius:999px;
+      padding:10px 14px;
+      display:flex;align-items:center;gap:8px;
+      cursor:pointer;
+      transition:.25s var(--ease);
+    }
+    .cart-btn:hover{border-color:#d7d7df;box-shadow:var(--shadow);transform:translateY(-1px)}
+    .cart-count{
+      min-width:20px;height:20px;border-radius:999px;
+      background:var(--accent);color:#fff;font-size:.75rem;
+      display:grid;place-items:center;padding:0 6px;
+    }
+
+    /* Hero */
+    .hero{
+      padding:52px 0 38px;
+    }
+    .hero-wrap{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:24px;
+      align-items:stretch;
+    }
+    .hero-text{
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:44px;
+      background:
+        radial-gradient(1200px 400px at -10% -20%, rgba(124,58,237,.08), transparent 50%),
+        radial-gradient(600px 300px at 80% 10%, rgba(167,139,250,.12), transparent 45%),
+        #fff;
+      box-shadow:var(--shadow);
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      border:1px solid #ddd;border-radius:999px;
+      padding:6px 10px;font-size:.78rem;color:#333;background:#fff;
+      margin-bottom:14px;
+    }
+    .dot{width:7px;height:7px;border-radius:999px;background:var(--accent)}
+    h1{
+      font-size:clamp(1.8rem,4vw,3.2rem);
+      line-height:1.08;
+      margin-bottom:14px;
+      letter-spacing:-.02em;
+    }
+    .hero p{color:var(--muted);max-width:55ch}
+    .hero-cta{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+    .btn{
+      border:none;border-radius:12px;padding:12px 18px;font-weight:600;cursor:pointer;
+      transition:.25s var(--ease);font-size:.95rem;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      color:#fff;box-shadow:0 10px 18px rgba(124,58,237,.32);
+    }
+    .btn-primary:hover{transform:translateY(-2px);filter:brightness(1.04)}
+    .btn-ghost{
+      background:#fff;border:1px solid var(--line);color:#111;
+    }
+    .btn-ghost:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+    .hero-media{
+      position:relative;border-radius:24px;overflow:hidden;min-height:430px;
+      box-shadow:var(--shadow);
+    }
+    .slider{
+      height:100%;position:relative;
+    }
+    .slides{
+      display:flex;height:100%;transition:transform .7s var(--ease);
+    }
+    .slide{
+      min-width:100%;height:100%;position:relative;
+    }
+    .slide img{width:100%;height:100%;object-fit:cover}
+    .slide-label{
+      position:absolute;left:16px;bottom:16px;
+      background:rgba(255,255,255,.9);
+      border:1px solid rgba(0,0,0,.08);
+      border-radius:999px;padding:7px 12px;font-size:.8rem;font-weight:600;
+      backdrop-filter: blur(5px);
+    }
+    .slider-controls{
+      position:absolute;right:12px;bottom:12px;display:flex;gap:8px;
+    }
+    .icon-btn{
+      width:38px;height:38px;border-radius:999px;border:1px solid rgba(0,0,0,.1);
+      background:rgba(255,255,255,.9);display:grid;place-items:center;cursor:pointer;
+      transition:.2s var(--ease);
+    }
+    .icon-btn:hover{transform:translateY(-1px);background:#fff}
+
+    section{padding:28px 0}
+    .section-head{
+      display:flex;justify-content:space-between;align-items:end;margin-bottom:16px;gap:20px;
+    }
+    .section-head h2{
+      font-size:clamp(1.3rem,2.4vw,2rem);letter-spacing:-.02em;
+    }
+    .section-head p{color:var(--muted);font-size:.95rem}
+
+    /* Products */
+    .grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
+    }
+    .card{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      overflow:hidden;background:#fff;
+      transition:.3s var(--ease);
+      position:relative;
+    }
+    .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#ddd}
+    .media{
+      position:relative;overflow:hidden;aspect-ratio:4/5;background:#f4f4f6;
+    }
+    .media img{
+      width:100%;height:100%;object-fit:cover;
+      transition:transform .6s var(--ease);
+    }
+    .card:hover .media img{transform:scale(1.08)}
+    .badge-wrap{
+      position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap;z-index:2;
+    }
+    .badge{
+      font-size:.7rem;font-weight:700;letter-spacing:.02em;
+      border-radius:999px;padding:5px 8px;
+      color:#fff;
+    }
+    .badge.new{background:#111}
+    .badge.sale{background:#e11d48}
+    .badge.trending{background:var(--accent)}
+    .quick-view{
+      position:absolute;right:10px;bottom:10px;z-index:2;
+      border:none;background:rgba(255,255,255,.92);
+      border:1px solid rgba(0,0,0,.08);
+      padding:8px 10px;border-radius:10px;
+      font-size:.78rem;font-weight:600;cursor:pointer;
+      transition:.25s var(--ease);
+      opacity:0;transform:translateY(6px);
+    }
+    .card:hover .quick-view{opacity:1;transform:translateY(0)}
+    .quick-view:hover{background:#fff;box-shadow:var(--shadow)}
+    .info{padding:14px}
+    .title{font-weight:600;font-size:.95rem}
+    .meta{
+      margin-top:5px;
+      display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:.86rem;
+    }
+    .price{font-weight:700;color:#111;font-size:1rem}
+    .actions{display:flex;gap:8px;margin-top:12px}
+    .add-btn{
+      flex:1;border:none;border-radius:10px;padding:10px 12px;
+      background:#111;color:#fff;font-weight:600;cursor:pointer;
+      transition:.25s var(--ease);
+    }
+    .add-btn:hover{background:#000;transform:translateY(-1px)}
+    .outline-btn{
+      border:1px solid var(--line);
+      background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer;
+    }
+
+    /* Reviews */
+    .reviews{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+    }
+    .review{
+      border:1px solid var(--line);border-radius:var(--radius);padding:18px;background:#fff;
+    }
+    .stars{color:#f59e0b;letter-spacing:1px;margin-bottom:10px}
+    .review p{color:#45454d;font-size:.95rem}
+    .review-user{margin-top:12px;font-weight:600;font-size:.9rem}
+
+    /* Newsletter */
+    .newsletter{
+      margin:24px 0 40px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:24px;
+      display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;
+      background:
+        radial-gradient(500px 120px at 100% 0%, rgba(124,58,237,.08), transparent 60%),
+        #fff;
+    }
+    .newsletter p{color:var(--muted)}
+    .signup{
+      display:flex;gap:10px;min-width:min(460px,100%);
+    }
+    .signup input{
+      flex:1;padding:12px 14px;border-radius:12px;border:1px solid var(--line);font:inherit;
+      min-width:0;
+    }
+    .signup button{
+      border:none;border-radius:12px;padding:12px 16px;background:var(--accent);color:#fff;font-weight:600;cursor:pointer;
+    }
+
+    footer{
+      border-top:1px solid var(--line);
+      padding:22px 0 28px;color:var(--muted);font-size:.88rem;
+    }
+
+    /* Modal */
+    .modal{
+      position:fixed;inset:0;background:rgba(7,7,9,.45);
+      display:none;align-items:center;justify-content:center;z-index:100;
+      padding:20px;
+    }
+    .modal.show{display:flex;animation:fade .25s ease}
+    .modal-card{
+      width:min(980px,100%);
+      background:#fff;border-radius:20px;overflow:hidden;border:1px solid #e8e8ee;
+      box-shadow:0 20px 60px rgba(0,0,0,.22);
+      display:grid;grid-template-columns:1fr 1fr;
+      animation:pop .28s var(--ease);
+    }
+    .modal-gallery{position:relative;background:#f6f6f8;min-height:420px}
+    .modal-gallery img{width:100%;height:100%;object-fit:cover}
+    .modal-body{padding:24px}
+    .modal-body h3{font-size:1.5rem;letter-spacing:-.02em;margin-bottom:8px}
+    .modal-body .price{font-size:1.2rem}
+    .muted{color:var(--muted)}
+    .size-row{display:flex;gap:8px;margin:14px 0 16px;flex-wrap:wrap}
+    .size{
+      border:1px solid var(--line);padding:7px 10px;border-radius:9px;font-size:.85rem;cursor:pointer;
+      transition:.2s var(--ease);
+    }
+    .size:hover,.size.active{border-color:#111;background:#111;color:#fff}
+    .close{
+      position:absolute;top:12px;right:12px;z-index:2;
+      width:34px;height:34px;border:none;border-radius:999px;background:rgba(255,255,255,.92);cursor:pointer;
+      border:1px solid rgba(0,0,0,.08);
+    }
+
+    /* Flying cart dot */
+    .fly{
+      position:fixed;z-index:999;
+      width:18px;height:18px;border-radius:999px;background:var(--accent);
+      box-shadow:0 6px 18px rgba(124,58,237,.45);
+      pointer-events:none;
+      transition:transform .75s var(--ease),opacity .75s var(--ease);
+    }
+
+    @keyframes fade{from{opacity:0}to{opacity:1}}
+    @keyframes pop{from{transform:translateY(8px) scale(.98);opacity:.6}to{transform:none;opacity:1}}
+
+    /* Responsive */
+    @media (max-width: 1024px){
+      .grid{grid-template-columns:repeat(3,1fr)}
+      .hero-wrap{grid-template-columns:1fr}
+      .hero-media{min-height:360px}
+      .modal-card{grid-template-columns:1fr}
+      .modal-gallery{min-height:300px}
+    }
+    @media (max-width: 760px){
+      .nav-links{display:none}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .reviews{grid-template-columns:1fr}
+      .newsletter{grid-template-columns:1fr}
+      .signup{min-width:0}
+      .hero-text{padding:26px}
+    }
+    @media (max-width: 480px){
+      .grid{grid-template-columns:1fr}
+      .hero{padding-top:30px}
+      .hero-media{min-height:280px}
+      .btn,.signup button,.signup input{font-size:.92rem}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span>Élan Studio</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#products">Shop</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#newsletter">Newsletter</a>
+      </nav>
+      <button class="cart-btn" id="cartButton" aria-label="Cart">
+        <span>Cart</span>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="hero-wrap">
+        <div class="hero-text">
+          <span class="pill"><span class="dot"></span> Featured Drop 2026</span>
+          <h1>Minimal essentials for a premium everyday look.</h1>
+          <p>Discover curated pieces crafted with precision, clean silhouettes, and refined details. Designed to elevate your wardrobe with timeless confidence.</p>
+          <div class="hero-cta">
+            <a href="#products" class="btn btn-primary">Shop Collection</a>
+            <button class="btn btn-ghost" id="openFeatured">Quick View Featured</button>
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <div class="slider" id="heroSlider">
+            <div class="slides">
+              <div class="slide">
+                <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1200&q=80" alt="Premium coat"/>
+                <span class="slide-label">Signature Trench — New</span>
+              </div>
+              <div class="slide">
+                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=80" alt="Premium fashion set"/>
+                <span class="slide-label">Urban Capsule — Trending</span>
+              </div>
+              <div class="slide">
+                <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1200&q=80" alt="Stylish outfit"/>
+                <span class="slide-label">Monochrome Edit — Sale</span>
+              </div>
+            </div>
+            <div class="slider-controls">
+              <button class="icon-btn" id="prevSlide">‹</button>
+              <button class="icon-btn" id="nextSlide">›</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="products" class="container">
+      <div class="section-head">
+        <div>
+          <h2>Product Showcase</h2>
+          <p>Premium picks with modern minimal styling.</p>
+        </div>
+      </div>
+      <div class="grid" id="productGrid"></div>
+    </section>
+
+    <section id="reviews" class="container">
+      <div class="section-head">
+        <div>
+          <h2>Customer Reviews</h2>
+          <p>Trusted by style-conscious customers worldwide.</p>
+        </div>
+      </div>
+      <div class="reviews">
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“The quality is exceptional. Clean cuts, premium fabric, and perfect fit. The packaging experience was luxurious.”</p>
+          <div class="review-user">— Amelia R.</div>
+        </article>
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“Absolutely love the minimalist look. Quick delivery, easy sizing, and the pieces elevate every outfit.”</p>
+          <div class="review-user">— David K.</div>
+        </article>
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“My go-to store for timeless essentials now. Everything feels thoughtfully designed and premium.”</p>
+          <div class="review-user">— Sofia M.</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="newsletter" class="container">
+      <div class="newsletter">
+        <div>
+          <h2 style="font-size:1.35rem;letter-spacing:-.02em;">Join the Élan List</h2>
+          <p>Get exclusive drops, style edits, and private sale access.</p>
+        </div>
+        <form class="signup" id="newsletterForm">
+          <input type="email" required placeholder="Enter your email address" />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© 2026 Élan Studio. Crafted for modern commerce.</div>
+  </footer>
+
+  <div class="modal" id="productModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-gallery">
+        <button class="close" id="closeModal">✕</button>
+        <img id="modalImage" src="" alt="Product image">
+      </div>
+      <div class="modal-body">
+        <h3 id="modalTitle">Product</h3>
+        <div class="price" id="modalPrice">$0</div>
+        <p class="muted" id="modalDesc" style="margin-top:10px;"></p>
+        <div class="size-row">
+          <span class="size active">S</span>
+          <span class="size">M</span>
+          <span class="size">L</span>
+          <span class="size">XL</span>
+        </div>
+        <div class="actions">
+          <button class="add-btn" id="modalAdd">Add to Cart</button>
+          <button class="outline-btn" id="modalWishlist">♡</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const products = [
+      {id:1,title:"Noir Tailored Blazer",price:189,image:"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80",badge:["New"],desc:"Structured silhouette with premium lining and refined tailoring."},
+      {id:2,title:"Ivory Signature Shirt",price:98,image:"https://images.unsplash.com/photo-1554412933-514a83d2f3c8?auto=format&fit=crop&w=900&q=80",badge:["Trending"],desc:"Breathable cotton blend with a crisp minimal finish."},
+      {id:3,title:"Mono Leather Tote",price:146,image:"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=900&q=80",badge:["Sale"],desc:"Spacious daily tote crafted with smooth vegan leather."},
+      {id:4,title:"Aero White Sneakers",price:129,image:"https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=900&q=80",badge:["New","Trending"],desc:"Lightweight comfort sneakers with elevated minimal aesthetics."},
+      {id:5,title:"Graphite Chrono Watch",price:220,image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80",badge:["Trending"],desc:"Premium steel case and bold monochrome dial."},
+      {id:6,title:"Cloud Knit Sweater",price:112,image:"https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=900&q=80",badge:["Sale"],desc:"Ultra-soft knit with modern relaxed fit."},
+      {id:7,title:"Obsidian Sunglasses",price:92,image:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=80",badge:["New"],desc:"UV-protected premium frames in matte black finish."},
+      {id:8,title:"Luxe Crossbody Mini",price:134,image:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80",badge:["Sale","Trending"],desc:"Compact statement piece with adjustable metal strap."}
+    ];
+
+    const grid = document.getElementById('productGrid');
+    const modal = document.getElementById('productModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalDesc = document.getElementById('modalDesc');
+    const closeModalBtn = document.getElementById('closeModal');
+    const modalAdd = document.getElementById('modalAdd');
+    const cartCount = document.getElementById('cartCount');
+    const cartButton = document.getElementById('cartButton');
+    let cart = 0, activeProduct = null;
+
+    function badgeClass(b){
+      if(b.toLowerCase()==='new') return 'new';
+      if(b.toLowerCase()==='sale') return 'sale';
+      return 'trending';
+    }
+
+    function productCard(p){
+      return `
+        <article class="card">
+          <div class="media">
+            <img src="${p.image}" alt="${p.title}">
+            <div class="badge-wrap">
+              ${p.badge.map(b=>`<span class="badge ${badgeClass(b)}">${b}</span>`).join('')}
+            </div>
+            <button class="quick-view" data-quick="${p.id}">Quick View</button>
+          </div>
+          <div class="info">
+            <div class="title">${p.title}</div>
+            <div class="meta">
+              <span class="price">$${p.price}</span>
+              <span>Premium</span>
+            </div>
+            <div class="actions">
+              <button class="add-btn" data-add="${p.id}">Add to Cart</button>
+              <button class="outline-btn" data-quick="${p.id}">View</button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    grid.innerHTML = products.map(productCard).join('');
+
+    function openModal(id){
+      const p = products.find(x=>x.id==id);
+      if(!p) return;
+      activeProduct = p;
+      modalImage.src = p.image;
+      modalTitle.textContent = p.title;
+      modalPrice.textContent = `$${p.price}`;
+      modalDesc.textContent = p.desc;
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(){
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+
+    function flyToCart(originEl){
+      const dot = document.createElement('span');
+      dot.className = 'fly';
+      document.body.appendChild(dot);
+      const from = originEl.getBoundingClientRect();
+      const to = cartButton.getBoundingClientRect();
+      dot.style.left = from.left + from.width/2 - 9 + 'px';
+      dot.style.top = from.top + from.height/2 - 9 + 'px';
+
+      requestAnimationFrame(()=>{
+        const dx = (to.left + to.width/2) - (from.left + from.width/2);
+        const dy = (to.top + to.height/2) - (from.top + from.height/2);
+        dot.style.transform = `translate(${dx}px, ${dy}px) scale(.35)`;
+        dot.style.opacity = '.25';
+      });
+      setTimeout(()=>dot.remove(),800);
+    }
+
+    document.addEventListener('click', (e)=>{
+      const quick = e.target.closest('[data-quick]');
+      const add = e.target.closest('[data-add]');
+      if(quick) openModal(quick.dataset.quick);
+      if(add){
+        cart++;
+        cartCount.textContent = cart;
+        flyToCart(add);
+      }
+    });
+
+    closeModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click',(e)=>{ if(e.target===modal) closeModal(); });
+    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeModal(); });
+
+    modalAdd.addEventListener('click',(e)=>{
+      cart++;
+      cartCount.textContent = cart;
+      flyToCart(e.target);
+    });
+
+    document.getElementById('openFeatured').addEventListener('click', ()=>openModal(1));
+
+    // sizes
+    document.querySelectorAll('.size').forEach(s=>{
+      s.addEventListener('click', ()=>{
+        document.querySelectorAll('.size').forEach(x=>x.classList.remove('active'));
+        s.classList.add('active');
+      });
+    });
+
+    // newsletter
+    document.getElementById('newsletterForm').addEventListener('submit',(e)=>{
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = 'Subscribed ✓';
+      btn.style.background = '#111';
+      setTimeout(()=>{
+        btn.textContent = 'Subscribe';
+        btn.style.background = '';
+        e.target.reset();
+      },1800);
+    });
+
+    // Hero slider
+    const slides = document.querySelector('#heroSlider .slides');
+    const totalSlides = document.querySelectorAll('#heroSlider .slide').length;
+    let idx = 0, timer;
+
+    function showSlide(i){
+      idx = (i + totalSlides) % totalSlides;
+      slides.style.transform = `translateX(-${idx*100}%)`;
+    }
+    function next(){ showSlide(idx+1); }
+    function prev(){ showSlide(idx-1); }
+
+    document.getElementById('nextSlide').addEventListener('click', ()=>{ next(); resetAuto(); });
+    document.getElementById('prevSlide').addEventListener('click', ()=>{ prev(); resetAuto(); });
+
+    function auto(){ timer = setInterval(next, 4200); }
+    function resetAuto(){ clearInterval(timer); auto(); }
+    auto();
+  </script>
+</body>
+</html>
